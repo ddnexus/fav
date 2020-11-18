@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+_fav-cli-clean() {
+    _fav-ls |
+        awk -vU="$FAV_UNKNOWN_ICON" '{ if ($3 == U) print }' |
+            _fav-rm
+}

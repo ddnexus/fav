@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+_fav-init() {
+    FAV_ENABLE_ICONS=${FAV_ENABLE_ICONS:-false}
+    FAV_DIR_ICON=${FAV_DIR_ICON:-$($FAV_ENABLE_ICONS && echo '' || echo 'D')}
+    FAV_FILE_ICON=${FAV_FILE_ICON:-$($FAV_ENABLE_ICONS && echo '' || echo 'F')}
+    FAV_UNKNOWN_ICON=${FAV_UNKNOWN_ICON:-$($FAV_ENABLE_ICONS && echo '' || echo '?')}
+}

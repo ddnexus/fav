@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+_fav-cli-list() {
+    _fav-ls
+}

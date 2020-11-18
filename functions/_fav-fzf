@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+_fav-fzf() {
+    local -x dir_cmd=${FAV_DIR_PREVIEW_CMD:-$( _fav-available-cmd 'exa -lbg --git --color=always' 'ls -l' ) }
+    local -x file_cmd=${FAV_FILE_PREVIEW_CMD:-$( _fav-available-cmd 'bat --paging=always' less more ) }
+    fzf ${=FAV_FZF_OPTIONS} \
+        --preview="$_fav_root/functions/_fav-preview {-1}" \
+        --bind="alt-j:preview-down,alt-k:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up" \
+        --ansi \
+        --multi \
+        $@
+}

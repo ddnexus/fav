@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+_fav-widget() {
+    _fav-ls |
+        _fav-fzf --nth=2,4 --header='Pick the favorites to PASTE in the prompt line' |
+            awk '{print "~"$2}' |
+                xargs
+}

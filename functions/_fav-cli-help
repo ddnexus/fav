@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+_fav-cli-help() {
+    cat <<HELP
+USAGE
+    fav COMMAND [ARGS]
+
+COMMANDS
+    add [-f FILE_NAME] [FAV_NAME]    Add the current dir or a file in it as a favorite
+    remove [SEARCH_STRING]           Remove one or multiple favorites eventually using fzf
+    list                             Print a list of all favorites
+    clean                            Remove all favorites pointing to an unknown path
+    help                             Show this screen
+
+WIDGET
+    Fzf-pick one or multiple favorites to paste into the prompt line
+
+OPTIONS
+    FAV_WIDGET_KEY          Key binding. Default: "^[v" (alt-v)
+    FAV_FILE                Path to the data file. Default: "\$HOME/.fav"
+    FAV_FZF_OPTS            Extra fzf options to override the FZF_DEFAULT_OPTS
+    FAV_DIR_PREVIEW_CMD     Fzf-preview command for dirs. Default: exa | ls
+    FAV_FILE_PREVIEW_CMD    Fzf-preview command for files. Default: bat | less | more
+    FAV_ENABLE_ICONS        Enable icons for favorites (true|false). Default: false
+    FAV_DIR_ICON            Custom icon (or string) for dirs. Default: "D"
+    FAV_FILE_ICON           Custom icon (or string) for files. Default: "F"
+    FAV_UNKNOWN_ICON        Custom icon (or string) for unknown paths. Default: "?"
+
+FULL DOC
+    https://github.com/ddnexus/fav
+HELP
+}

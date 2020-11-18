@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+local fav_path="$1"
+file -z "$fav_path"
+echo
+
+if [[ -d $fav_path ]]; then
+    ${=dir_cmd} "$fav_path"
+else
+    case "$fav_path" in
+        *.pdf)
+            pdftotext "$fav_path" - | ${=file_cmd}
+            ;;
+        *.zip)
+            unzip -l "$fav_path" | ${=file_cmd}
+            ;;
+        *.tar.gz)
+            tar -ztvf "$fav_path" | ${=file_cmd}
+            ;;
+        *.tar.bz2)
+            tar -jtvf "$fav_path" | ${=file_cmd}
+            ;;
+        *.tar.xz)
+            tar -Jtvf "$fav_path" | ${=file_cmd}
+            ;;
+        *.tar)
+            tar -tvf "$fav_path" | ${=file_cmd}
+            ;;
+        *)
+            ${=file_cmd} "$fav_path"
+            ;;
+    esac
+fi
