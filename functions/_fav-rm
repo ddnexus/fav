@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 
 _fav-rm() {
-    awk -vfile="$FAV_FILE" \
-        '{ lines=lines$1"d;"; $1="[REMOVED]"; print }
-         END { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", lines);
-               system("sed -i \"" lines "\"" OFS file) }' |
-        column -t |
-            grep . && { hash -drf; source "$FAV_FILE" }
+	awk -vfile="$FAV_FILE" \
+		'{ lines=lines$1"d;"; $1="[REMOVED]"; print }
+		 END { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", lines);
+			   system("sed -i \"" lines "\"" OFS file) }' |
+		column -t |
+			grep . && { hash -drf; source "$FAV_FILE" }
 }

@@ -135,7 +135,7 @@ Add `source "/your/path/to/fav.plugin.zsh"` in your `~/.zshrc`.
 | `fav remove [SEARCH_STRING]`    | Remove selected favorites: `fav` matches the optional `SEARCH_STRING` to `FAV_NAME` and removes it if it gets a single match. No `SEARCH_STRING` or multiple matches open the `fzf` panel |
 | `fav list`                      | Print the list of all the favorites                                                                                                                                                       |
 | `fav clean`                     | Remove all the favorites pointing to an unknown path                                                                                                                                      |
-| `fav env`                       | Show `fav` variables and options                                                                                                                                                          |
+| `fav env`                       | Show the value of variables and options                                                                                                                                                          |
 | `fav help`                      | Show an usage screen                                                                                                                                                                      |
 | `alt-v`                         | Default `FAV_WIDGET_KEY` binding to the `fav::widget`. It opens the `fzf` panel listing all favs. It pastes the selected favorites into the `ZLE` buffer                                  |
 

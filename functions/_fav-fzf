@@ -1,12 +1,12 @@
 #!/usr/bin/env zsh
 
 _fav-fzf() {
-    fzf ${=FAV_FZF_OPTIONS} \
-        --with-nth=2,3,4 \
-        --nth=2,3 \
-        --preview="$_fav_root/functions/_fav-preview {-1}" \
-        --bind="alt-j:preview-down,alt-k:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up" \
-        --ansi \
-        --multi \
-        $@
+	fzf ${=FAV_FZF_OPTIONS} \
+		--with-nth=2,3,4 \
+		--nth=2,3 \
+		--preview="$_fav_root/functions/_fav-preview {-1}" \
+		--bind="alt-j:preview-down,alt-k:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up" \
+		--ansi \
+		--multi \
+		$@
 }
