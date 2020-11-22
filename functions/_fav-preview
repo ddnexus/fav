@@ -5,29 +5,29 @@ file -z "$fav_path"
 echo
 
 if [[ -d $fav_path ]]; then
-    ${=dir_cmd} "$fav_path"
+    ${=FAV_DIR_PREVIEW_CMD} "$fav_path"
 else
     case "$fav_path" in
         *.pdf)
-            pdftotext "$fav_path" - | ${=file_cmd}
+            pdftotext "$fav_path" - | ${=FAV_FILE_PREVIEW_CMD}
             ;;
         *.zip)
-            unzip -l "$fav_path" | ${=file_cmd}
+            unzip -l "$fav_path" | ${=FAV_FILE_PREVIEW_CMD}
             ;;
         *.tar.gz)
-            tar -ztvf "$fav_path" | ${=file_cmd}
+            tar -ztvf "$fav_path" | ${=FAV_FILE_PREVIEW_CMD}
             ;;
         *.tar.bz2)
-            tar -jtvf "$fav_path" | ${=file_cmd}
+            tar -jtvf "$fav_path" | ${=FAV_FILE_PREVIEW_CMD}
             ;;
         *.tar.xz)
-            tar -Jtvf "$fav_path" | ${=file_cmd}
+            tar -Jtvf "$fav_path" | ${=FAV_FILE_PREVIEW_CMD}
             ;;
         *.tar)
-            tar -tvf "$fav_path" | ${=file_cmd}
+            tar -tvf "$fav_path" | ${=FAV_FILE_PREVIEW_CMD}
             ;;
         *)
-            ${=file_cmd} "$fav_path"
+            ${=FAV_FILE_PREVIEW_CMD} "$fav_path"
             ;;
     esac
 fi

@@ -2,6 +2,7 @@
 
 # Copyright (c) 2020 Domizio Demichelis - dd.nexus@gmail.com - https://github/com/ddnexus
 
+_fav_version="0.2.0"
 _fav_root=$(readlink -f $0 | xargs dirname)
 _fav_functions=$(ls -p "$_fav_root/functions" | grep -v /)
 fpath+=($_fav_root/functions)

@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+_fav-cli-env() {
+    for var in _fav_version \
+               _fav_root \
+               FAV_FILE \
+               FAV_WIDGET_KEY \
+               FAV_DIR_PREVIEW_CMD \
+               FAV_FILE_PREVIEW_CMD \
+               FAV_ENABLE_ICONS \
+               FAV_DIR_ICON \
+               FAV_FILE_ICON \
+               FAV_UNKNOWN_ICON
+    do
+        echo "$var#${(P)var}"
+    done |
+        column -t --separator="#"
+}
+
+

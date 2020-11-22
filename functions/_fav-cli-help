@@ -2,6 +2,8 @@
 
 _fav-cli-help() {
     cat <<HELP
+fav $_fav_version - Copyright (c) 2020 Domizio Demichelis - dd.nexus@gmail.com
+
 USAGE
     fav COMMAND [ARGS]
 
@@ -10,6 +12,7 @@ COMMANDS
     remove [SEARCH_STRING]           Remove one or multiple favorites eventually using fzf
     list                             Print a list of all favorites
     clean                            Remove all favorites pointing to an unknown path
+    env                              Show fav variables and options
     help                             Show this screen
 
 WIDGET
