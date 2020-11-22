@@ -2,7 +2,7 @@
 
 _fav-widget() {
     _fav-ls |
-        _fav-fzf --nth=2,4 --header='Pick the favorites to PASTE in the prompt line' |
-            awk '{print "~"$2}' |
+        _fav-fzf --header='Pick the favorites to PASTE in the prompt line' |
+            awk '{print "~"$3}' |
                 xargs
 }

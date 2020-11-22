@@ -10,23 +10,23 @@ Add arbitrary named favorites of any current dir or any file in it:
 
 ```
 ~/repos/dd/oss/docker/files $ fav add docf
-[ADDED] docf D /home/dd/repos/dd/oss/docker/files
+[ADDED]  D  docf /home/dd/repos/dd/oss/docker/files
 
 /opt/vivaldi/resources/vivaldi/hooks $ fav add vivh
-[ADDED]  vivh  D  /opt/vivaldi/resources/vivaldi/hooks
+[ADDED]  D  vivh  /opt/vivaldi/resources/vivaldi/hooks
 
 ~/repos/dd/oss/ruby/pagy $ fav add -f README.md pagy-readme
-[ADDED]  pagy-readme  F  /home/dd/repos/dd/oss/ruby/pagy/README.md
+[ADDED]  F  pagy-readme  /home/dd/repos/dd/oss/ruby/pagy/README.md
 ```
 
 If you don't pass an explicit name, `fav` generates one based on the `basename $PWD`:
 
 ```
 ~/repos/dd/oss/ruby/pagy $ fav add
-[ADDED]  pagy  D  /home/dd/repos/dd/oss/ruby/pagy
+[ADDED]  D  pagy  /home/dd/repos/dd/oss/ruby/pagy
 
 ~/repos/dd/oss/ruby/pagy $ fav add -f CHANGELOG.md
-[ADDED]  CHANGELOG.md  F  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
+[ADDED]  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
 
 ```
 
@@ -64,25 +64,22 @@ List the favorites (alpha order):
 
 ```
 ~ $ fav list
-1  CHANGELOG.md  F  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
-2  docf          D  /home/dd/repos/dd/oss/docker/files
-3  old           ?  /path/old
-4  older         ?  /path/older
-5  pagy          D  /home/dd/repos/dd/oss/ruby/pagy
-6  pagy-readme   F  /home/dd/repos/dd/oss/ruby/pagy/README.md
-7  vivh          D  /opt/vivaldi/resources/vivaldi/hooks
+1  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
+2  D  docf          /home/dd/repos/dd/oss/docker/files
+3  ?  old           /path/old
+4  ?  older         /path/older
+5  D  pagy          /home/dd/repos/dd/oss/ruby/pagy
+6  F  pagy-readme   /home/dd/repos/dd/oss/ruby/pagy/README.md
+7  D  vivh          /opt/vivaldi/resources/vivaldi/hooks
 ```
 
 ### Remove favorites
 
-Remove id/named favorite(s):
+Remove named favorite(s):
 
 ```
-~ $ fav remove 6       # autocompletes using the id (if only one matches) or opens fzf panel
-[REMOVED]  pagy-readme  F  /home/dd/repos/dd/oss/ruby/pagy/README.md
-
-~ $ fav remove doc     # autocompletes using the name (if only one matches) or opens fzf panel
-[REMOVED]  docf  D  /home/dd/repos/dd/oss/docker/files
+~ $ fav remove doc     # autocompletes (if only one matches) or opens the fzf panel
+[REMOVED]  D  docf  /home/dd/repos/dd/oss/docker/files
 ```
 
 Remove selected favorites with fzf panel:
@@ -90,7 +87,7 @@ Remove selected favorites with fzf panel:
 ```
 ~ $ fav remove
 <pick one or more favs with fzf>
-[REMOVED]  vivh  D  /opt/vivaldi/resources/vivaldi/hooks
+[REMOVED]  D  vivh  /opt/vivaldi/resources/vivaldi/hooks
 ```
 
 ### Clean unknown paths
@@ -99,8 +96,8 @@ Removes all the favorites pointing to a unknown path:
 
 ```
 ~ $ fav clean
-[REMOVED]  old    ?  /path/old
-[REMOVED]  older  ?  /path/older
+[REMOVED]  ?  old    /path/old
+[REMOVED]  ?  older  /path/older
 ```
 
 ## Install
@@ -148,10 +145,10 @@ Add `source "/your/path/to/fav.plugin.zsh"` in your `~/.zshrc`.
 | ---------------------- | ----------------------------------------------------------------------------------------------- | ------------------- |
 | `FAV_WIDGET_KEY`       | Key binding                                                                                     | `^[v` (alt-v)       |
 | `FAV_FILE`             | Path to the data file                                                                           | `$HOME/.fav`        |
-| `FAV_FZF_OPTS`         | Extra `fzf` string/array of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`) | ()                  |
+| `FAV_FZF_OPTS`         | Extra `fzf` string/array of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`) | `()`                |
 | `FAV_DIR_PREVIEW_CMD`  | Command used to populate the `fzf` preview panel for dirs                                       | `exa | ls`          |
 | `FAV_FILE_PREVIEW_CMD` | Command used to populate the `fzf` preview panel for files                                      | `bat | less | more` |
-| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)              | false               |
+| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)              | `false`             |
 | `FAV_DIR_ICON`         | Custom icon (or string) for dirs                                                                | `D`                 |
 | `FAV_FILE_ICON`        | Custom icon (or string) for files                                                               | `F`                 |
 | `FAV_UNKNOWN_ICON`     | Custom icon (or string) for unknown paths                                                       | `?`                 |

@@ -11,5 +11,5 @@ _fav-cli-add() {
     echo "hash -d $fav_name=$fav_path" >> "$FAV_FILE"
     sort -k 3 -o "$FAV_FILE" "$FAV_FILE"
     source "$FAV_FILE"
-    echo "[ADDED] $fav_name $([[ -d $fav_path ]] && echo "$FAV_DIR_ICON" || echo "$FAV_FILE_ICON") $fav_path" | column -t
+    echo "[ADDED] $([[ -d $fav_path ]] && echo "$FAV_DIR_ICON" || echo "$FAV_FILE_ICON") $fav_name $fav_path" | column -t
 }
