@@ -1,11 +1,16 @@
 #!/usr/bin/env zsh
 
 _fav-ls() {
-	awk -F = -vD="$FAV_DIR_ICON" -vF="$FAV_FILE_ICON" -vU="$FAV_UNKNOWN_ICON" \
-		'{ gsub(/^hash -d /, "", $1);
-		   if (system("test -e "$2)){ $1=U OFS $1; print "\033[31m"NR OFS $0"\033[0m" }
-		   else if (system("test -d "$2)){ $1=F OFS $1; print "\033[33m"NR OFS $0"\033[0m" }
-		   else { $1=D OFS $1; print "\033[34m"NR OFS $0"\033[0m" }
-		}' "$FAV_FILE" |
-		column -t
+	local len=( $( awk -F'=' '{ if ( length($1) > l ) { l=length($1) } } END { print length(NR) ORS l-8}' "$FAV_FILE" ) )
+	awk -F'=' -vUi="$FAV_UNKNOWN_ICON" -vFi="$FAV_FILE_ICON" -vDi="$FAV_DIR_ICON" -vL1="${len[1]}" -vL3="${len[2]}" \
+		'BEGIN { Ufmt = "\033[31m%-"L1"s  "Ui"  %-"L3"s  %s\033[0m\n"
+		         Ffmt = "\033[33m%-"L1"s  "Fi"  %-"L3"s  %s\033[0m\n"
+				 Dfmt = "\033[34m%-"L1"s  "Di"  %-"L3"s  %s\033[0m\n"
+			   }
+		       { name = substr($1,9)
+				 path = substr($0, index($0,FS)+2); sub(/"$/, "", path)
+				 if      (system("test -e \""path"\"")){ printf Ufmt, NR, name, path }
+				 else if (system("test -d \""path"\"")){ printf Ffmt, NR, name, path }
+				 else                                  { printf Dfmt, NR, name, path }
+			   }' "$FAV_FILE"
 }

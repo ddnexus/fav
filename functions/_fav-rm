@@ -1,10 +1,18 @@
 #!/usr/bin/env zsh
 
 _fav-rm() {
-	awk -vfile="$FAV_FILE" \
-		'{ lines=lines$1"d;"; $1="[REMOVED]"; print }
-		 END { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", lines);
-			   system("sed -i \"" lines "\"" OFS file) }' |
-		column -t |
-			grep . && { hash -drf; source "$FAV_FILE" }
+	local removed=$( < /dev/stdin )
+	local len=$( awk '{ if ( length($3) > l ) { l=length($3) } } END { print l }' <<< "$removed" )
+	awk -vL3="$len" -vfile="$FAV_FILE" \
+		'BEGIN { fmt = "[REMOVED]  %s  %-"L3"s  %s\n"
+			   }
+		       { lines = lines$1"d;"
+			     path = substr($0, index($0,$4))
+			     printf fmt, $2, $3, path
+			   }
+		 END   { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", lines);
+			     system("sed -i \"" lines "\" " file)
+			   }' <<< "$removed"
+	hash -drf
+	source "$FAV_FILE"
 }
