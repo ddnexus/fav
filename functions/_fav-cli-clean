@@ -2,6 +2,6 @@
 
 _fav-cli-clean() {
 	_fav-ls |
-		awk -vU="$FAV_UNKNOWN_ICON" '{ if ($2 == U) print }' |
+		awk -vUi="$FAV_UNKNOWN_ICON" '{ if ($2 == Ui) print }' |
 			_fav-rm
 }
