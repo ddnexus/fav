@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+fav-widget() {
+	local accept=$(should-accept-line)
+	LBUFFER="${LBUFFER}$( _fav-widget )"
+	local ret=$?
+	zle redisplay
+	typeset -f zle-line-init > /dev/null && zle zle-line-init
+	[[ $ret -eq 0 && -n "$BUFFER" && -n "$accept" ]] && zle .accept-line
+	return $ret
+}

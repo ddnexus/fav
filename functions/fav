@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+fav() {
+	local fav_cmd="$1"
+	if ! type "_fav-cli-$fav_cmd" > /dev/null; then
+		echo "[ERROR] Unknown fav command '$fav_cmd'!"
+		echo
+		_fav-cli-help
+		return 1
+	fi
+	shift 1
+	_fav-cli-$fav_cmd $@
+}
+

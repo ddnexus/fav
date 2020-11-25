@@ -6,7 +6,6 @@ _fav_version="0.2.0"
 _fav_root=$(readlink -f $0 | xargs dirname)
 fpath+=($_fav_root/functions)
 autoload -Uz $(ls -p "$_fav_root/functions" | grep -v /)
-hash -df
 
 [[ -f ${FAV_FILE:=$HOME/.fav} ]] && source "$FAV_FILE" || { mkdir -p "$(dirname "$FAV_FILE")" && touch "$FAV_FILE" }
 FAV_DIR_PREVIEW_CMD=${FAV_DIR_PREVIEW_CMD:-$( _fav-available-cmd 'exa -lbg --git --color=always' 'ls -l' ) }
@@ -17,27 +16,7 @@ FAV_DIR_ICON=${FAV_DIR_ICON:-$($FAV_ENABLE_ICONS && echo ' ' || echo 'D')}   
 FAV_FILE_ICON=${FAV_FILE_ICON:-$($FAV_ENABLE_ICONS && echo ' ' || echo 'F')}       #     
 FAV_UNKNOWN_ICON=${FAV_UNKNOWN_ICON:-$($FAV_ENABLE_ICONS && echo '' || echo '?')}
 
-fav() {
-	local fav_cmd="$1"
-	if ! type "_fav-cli-$fav_cmd" > /dev/null; then
-		echo "[ERROR] Unknown fav command '$fav_cmd'!"
-		echo
-		_fav-cli-help
-		return 1
-	fi
-	shift 1
-	_fav-cli-$fav_cmd $@
-}
-
-fav-widget() {
-	local accept=$(should-accept-line)
-	LBUFFER="${LBUFFER}$( _fav-widget )"
-	local ret=$?
-	zle redisplay
-	typeset -f zle-line-init > /dev/null && zle zle-line-init
-	[[ $ret -eq 0 && -n "$BUFFER" && -n "$accept" ]] && zle .accept-line
-	return $ret
-}
-
 zle -N fav-widget
 bindkey ${FAV_WIDGET_KEY:='^[v'} fav-widget
+
+hash -df
