@@ -6,10 +6,10 @@ _fav-rm() {
 	awk -vL3="$len" -vfav_file="$FAV_FILE" \
 		'BEGIN { fmt = "[REMOVED]  %s  %-"L3"s  %s\n"
 			   }
-		       { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", $0)
+			   { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", $0)
 				 lines = lines$1"d;"
-			     path = substr($0, index($0,$4))
-			     printf fmt, $2, $3, path
+				 path = substr($0, index($0,$5))
+				 printf fmt, $3, $4, path
 			   }
 		 END   { system("sed -i \"" lines "\" " fav_file)
 			   }' <<< "$removed"

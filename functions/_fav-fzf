@@ -5,9 +5,9 @@
 # preview param {} based on original input (re-join possibly space-split path)
 _fav-fzf() {
 	fzf ${=FAV_FZF_OPTIONS} \
-		--with-nth=2.. \
+		--with-nth=3.. \
 		--nth=2.. \
-		--preview="$_fav_root/functions/_fav-preview {4..}" \
+		--preview="$_fav_root/functions/_fav-preview {5..}" \
 		--bind="alt-j:preview-down,alt-k:preview-up,ctrl-f:preview-page-down,ctrl-b:preview-page-up" \
 		--ansi \
 		--multi \

@@ -128,30 +128,31 @@ Add `source "/your/path/to/fav.plugin.zsh"` in your `~/.zshrc`.
 
 ## Commands
 
-| Command                         | Action                                                                                                                                                                                    |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `add [-f FILE_NAME] [FAV_NAME]` | Add the current dir or the `FILE_NAME` in it as `FAV_NAME`. If missing, `FAV_NAME` is generated based on `basename $PWD` or `FILE_NAME`                                                   |
-| `~FAV_NAME`                     | Generated alias that expands to full favorite path, internally declared with `hash -d NAME=/favorite/path` (see `man zshbuiltins` /hash)                                                  |
-| `fav remove [SEARCH_STRING]`    | Remove selected favorites: `fav` matches the optional `SEARCH_STRING` to `FAV_NAME` and removes it if it gets a single match. No `SEARCH_STRING` or multiple matches open the `fzf` panel |
-| `fav list`                      | Print the list of all the favorites                                                                                                                                                       |
-| `fav clean`                     | Remove all the favorites pointing to an unknown path                                                                                                                                      |
-| `fav env`                       | Show the value of variables and options                                                                                                                                                          |
-| `fav help`                      | Show an usage screen                                                                                                                                                                      |
-| `alt-v`                         | Default `FAV_WIDGET_KEY` binding to the `fav::widget`. It opens the `fzf` panel listing all favs. It pastes the selected favorites into the `ZLE` buffer                                  |
+| Command                | Action                                                                                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `add [-f FILE] [NAME]` | Add the current dir or the `FILE` in it as `NAME`. If missing, `NAME` is generated based on `basename $PWD` or `FILE`                                                    |
+| `~NAME`                | Generated alias that expands to full favorite path, internally declared with `hash -d NAME=/favorite/path` (see `man zshbuiltins` /hash)                                 |
+| `fav remove [QUERY]`   | Remove selected favorites: `fav` matches the optional `QUERY` to `NAME` and removes it if it gets a single match. No `QUERY` or multiple matches open the `fzf` panel    |
+| `fav list [ORDER]`     | Print the list of all the favorites. ORDER order can be `-type`, `-name`, `-path` or `-time` or reversed with `-rtype`, `-rname`, `-rpath` or `-rtime` (default `-time`) |
+| `fav clean`            | Remove all the favorites pointing to an unknown path                                                                                                                     |
+| `fav env`              | Show the value of variables and options                                                                                                                                  |
+| `fav help`             | Show an usage screen                                                                                                                                                     |
+| `alt-v`                | Default `FAV_WIDGET_KEY` binding to the `fav::widget`. It opens the `fzf` panel listing all favs. It pastes the selected favorites into the `ZLE` buffer                 |
 
 ## Options
 
-| Variable               | Description                                                                                     | Default             |
-| ---------------------- | ----------------------------------------------------------------------------------------------- | ------------------- |
-| `FAV_WIDGET_KEY`       | Key binding                                                                                     | `^[v` (alt-v)       |
-| `FAV_FILE`             | Path to the data file                                                                           | `$HOME/.fav`        |
-| `FAV_FZF_OPTS`         | Extra `fzf` string/array of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`) | `()`                |
-| `FAV_DIR_PREVIEW_CMD`  | Command used to populate the `fzf` preview panel for dirs                                       | `exa | ls`          |
-| `FAV_FILE_PREVIEW_CMD` | Command used to populate the `fzf` preview panel for files                                      | `bat | less | more` |
-| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)              | `false`             |
-| `FAV_DIR_ICON`         | Custom icon (or string) for dirs                                                                | `D`                 |
-| `FAV_FILE_ICON`        | Custom icon (or string) for files                                                               | `F`                 |
-| `FAV_UNKNOWN_ICON`     | Custom icon (or string) for unknown paths                                                       | `?`                 |
+| Variable               | Description                                                                                                                       | Default             |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `FAV_WIDGET_KEY`       | Key binding                                                                                                                       | `^[v` (alt-v)       |
+| `FAV_FILE`             | Path to the data file                                                                                                             | `$HOME/.fav`        |
+| `FAV_FZF_OPTS`         | Extra `fzf` string/array of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`)                                   | `()`                |
+| `FAV_DIR_PREVIEW_CMD`  | Command used to populate the `fzf` preview panel for dirs                                                                         | `exa | ls`          |
+| `FAV_FILE_PREVIEW_CMD` | Command used to populate the `fzf` preview panel for files                                                                        | `bat | less | more` |
+| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)                                                | `false`             |
+| `FAV_DIR_ICON`         | Custom icon (or string) for dirs                                                                                                  | `D`                 |
+| `FAV_FILE_ICON`        | Custom icon (or string) for files                                                                                                 | `F`                 |
+| `FAV_UNKNOWN_ICON`     | Custom icon (or string) for unknown paths                                                                                         | `?`                 |
+| `FAV_ORDER`            | Keep the favorite list ordered by `-type`, `-name`, `-path` or `-time` or reversed with `-rtype`, `-rname`, `-rpath` or `-rtime`. | `-time`             |
 
 ## License
 

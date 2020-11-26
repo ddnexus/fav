@@ -3,6 +3,6 @@
 _fav-widget() {
 	_fav-ls |
 		_fav-fzf --header='Pick the favorites to PASTE in the prompt line' |
-			awk '{ print "~"$3 }' |
+			awk '{ print "~"$4 }' |
 				xargs
 }
