@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 _fav-available-cmd() {
-	for cmd; do
-		type ${cmd%% *} > /dev/null && { echo $cmd; return 0 }
-	done
-	return 1
+    for cmd; do
+        type ${cmd%% *} > /dev/null && { echo $cmd; return 0 }
+    done
+    return 1
 }

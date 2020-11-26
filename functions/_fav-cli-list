@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
 _fav-cli-list() {
-	_fav-ls $1 |
-		sed -E 's/[[:digit:]]+\s+[DFU]\s+//'
+    _fav-ls $1 |
+        sed -E 's/[[:digit:]]+\s+[DFU]\s+//'
 }

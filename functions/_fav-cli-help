@@ -31,7 +31,7 @@ _fav-cli-help() {
 			FAV_FILE_ICON         Custom icon (or string) for files. Default: "F"
 			FAV_UNKNOWN_ICON      Custom icon (or string) for unknown paths. Default: "?"
 			FAV_ORDER             Keep ordered by -type|-name|-path|-time, or reversed with
-								  -rtype|-rname|-rpath|-rtime. Defaut -time
+			                      -rtype|-rname|-rpath|-rtime. Defaut -time
 
 		FULL DOC
 			https://github.com/ddnexus/fav

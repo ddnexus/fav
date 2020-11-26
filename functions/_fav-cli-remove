@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 _fav-cli-remove() {
-	_fav-ls |
-		_fav-fzf --query="$*" -1 --header="Pick the favorites to REMOVE from the list" |
-			 _fav-rm
+    _fav-ls |
+        _fav-fzf --query="$*" -1 --header="Pick the favorites to REMOVE from the list" |
+            _fav-rm
 }
