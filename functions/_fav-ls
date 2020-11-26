@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 _fav-ls() {
-    local fav_order=${1:-$FAV_ORDER}
+    local fav_order=${1:-${FAV_ORDER:--time}}
     local len=( $( awk -F'=' '{ if ( length($1) > l ) { l=length($1) } } END { print length(NR) ORS l-8}' "$FAV_FILE" ) )
     awk -F'=' -vUi="$FAV_UNKNOWN_ICON" -vFi="$FAV_FILE_ICON" -vDi="$FAV_DIR_ICON" -vL1="${len[1]}" -vL3="${len[2]}" \
         'BEGIN { Ufmt = "\033[31m%-"L1"s  U  "Ui"  %-"L3"s  %s\033[0m\n"
@@ -21,7 +21,11 @@ _fav-ls() {
             -rname) LC_ALL=C sort -dbir -k4,4 ;;
             -path)  LC_ALL=C sort -dbi  -k5 ;;
             -rpath) LC_ALL=C sort -dbir -k5 ;;
+            -time)  >&1 ;;
             -rtime) LC_ALL=C sort -k1.6,1nr ;;
-            *) >&1 ;;
+            *)  echo "[ERROR] Unrecognized FAV_ORDER \"$fav_order\"! Using default order \"-time\".\n" >&2
+                >&1
+                return 1
+            ;;
         esac
 }

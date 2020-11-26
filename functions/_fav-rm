@@ -2,6 +2,7 @@
 
 _fav-rm() {
     local removed=$( < /dev/stdin )
+    [[ -z $removed ]] && echo "[INFO] All right! Nothing to clean!" >&2 && return 0
     local len=$( awk '{ if ( length($3) > l ) { l=length($3) } } END { print l }' <<< "$removed" )
     awk -vL3="$len" -vfav_file="$FAV_FILE" \
         'BEGIN { fmt = "[REMOVED]  %s  %-"L3"s  %s\n"

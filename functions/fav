@@ -3,7 +3,7 @@
 fav() {
     local fav_cmd="$1"
     if ! type "_fav-cli-$fav_cmd" > /dev/null; then
-        echo "[ERROR] Unknown fav command '$fav_cmd'!"
+        echo "[ERROR] Unknown fav command '$fav_cmd'!" >&2
         echo
         _fav-cli-help
         return 1

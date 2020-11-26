@@ -18,6 +18,6 @@ _fav-cli-env() {
         [[ ${#var} -gt $len ]] && len=${#var}
     done
     for var in $variables; do
-        printf "%-${len}s  %s\n" "$var" "${(P)var}"
+        printf "    %-${len}s  %s\n" "$var" "${(P)var}"
     done
 }

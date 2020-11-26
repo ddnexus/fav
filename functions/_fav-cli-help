@@ -4,36 +4,38 @@ _fav-cli-help() {
 	cat <<-HELP
 		$($FAV_ICONS && echo '留')fav $_fav_version - Copyright (c) 2020 Domizio Demichelis - dd.nexus@gmail.com
 
+		Easily add and recall named favorites of your important directories and files
+
 		WIDGET
-			Fzf-pick one or multiple favorites to paste into the prompt line with
-			Default "^[v" (alt-v)
+		    Fzf-pick one or multiple favorites to paste into the prompt line with
+		    default "^[v" (alt-v). See FAV_WIDGET_KEY below
 
 		USAGE
-			fav COMMAND [ARGS]
+		    fav COMMAND [ARGS]
 
 		COMMANDS
-			add [-f FILE] [NAME]  Add the current dir or a file in it as a favorite
-			~NAME                 Generated alias that expands to full favorite path
-			remove [QUERY]        Remove one or multiple favorites eventually using fzf
-			list [ORDER]          Print the list of favorites. ORDER (see FAV_ORDER option)
-			clean                 Remove all favorites pointing to an unknown path
-			env                   Show the value of variables and options
-			help                  Show this screen
+		    add [-f FILE] [NAME]  Add the current dir or a file in it as a favorite
+		    ~NAME                 Generated alias that expands to the full favorite path
+		    remove [QUERY]        Remove one or multiple favorites eventually using fzf
+		    list [ORDER]          List the favorites. ORDER: see FAV_ORDER values below
+		    clean                 Remove all favorites pointing to an unknown path
+		    env                   Show the value of variables and options
+		    help                  Show this screen
 
 		OPTIONS
-			FAV_WIDGET_KEY        Key binding. Default: "^[v" (alt-v)
-			FAV_FILE              Path to the data file. Default: "\$HOME/.fav"
-			FAV_FZF_OPTS          Extra fzf options to override the FZF_DEFAULT_OPTS
-			FAV_DIR_PREVIEW_CMD   Fzf-preview command for dirs. Default: exa | ls
-			FAV_FILE_PREVIEW_CMD  Fzf-preview command for files. Default: bat | less | more
-			FAV_ENABLE_ICONS      Enable icons for favorites (true|false). Default: false
-			FAV_DIR_ICON          Custom icon (or string) for dirs. Default: "D"
-			FAV_FILE_ICON         Custom icon (or string) for files. Default: "F"
-			FAV_UNKNOWN_ICON      Custom icon (or string) for unknown paths. Default: "?"
-			FAV_ORDER             Keep ordered by -type|-name|-path|-time, or reversed with
-			                      -rtype|-rname|-rpath|-rtime. Defaut -time
+		    FAV_WIDGET_KEY        Key binding. Default: "^[v" (alt-v)
+		    FAV_FILE              Path to the data file. Default: "\$HOME/.fav"
+		    FAV_FZF_OPTS          Extra fzf options to override the FZF_DEFAULT_OPTS
+		    FAV_DIR_PREVIEW_CMD   Fzf-preview command for dirs. Default: exa|ls
+		    FAV_FILE_PREVIEW_CMD  Fzf-preview command for files. Default: bat|less|more
+		    FAV_ENABLE_ICONS      Enable icons for favorites (true|false). Default: false
+		    FAV_DIR_ICON          Icon string for dirs. Default: "D"
+		    FAV_FILE_ICON         Icon string for files. Default: "F"
+		    FAV_UNKNOWN_ICON      Icon string for unknown paths. Default: "?"
+		    FAV_ORDER             Keep ordered by -type, -name, -path, -time, or reversed
+		                          with -rtype, -rname, -rpath, -rtime. Defaut -time
 
-		FULL DOC
-			https://github.com/ddnexus/fav
+		DOCUMENTATION
+		    https://github.com/ddnexus/fav
 	HELP
 }
