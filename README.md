@@ -6,7 +6,18 @@
 
 ### Add favorite
 
-Add arbitrary named favorites of any current dir or any file in it:
+Add any dir or file as a favorite: 
+
+```
+~/repos/dd/oss/ruby/pagy $ fav add
+[ADDED]  D  pagy  /home/dd/repos/dd/oss/ruby/pagy
+
+~/repos/dd/oss/ruby/pagy $ fav add -f CHANGELOG.md
+[ADDED]  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
+
+```
+
+Add arbitrary named favorites:
 
 ```
 ~/repos/dd/oss/docker/files $ fav add docf
@@ -17,17 +28,6 @@ Add arbitrary named favorites of any current dir or any file in it:
 
 ~/repos/dd/oss/ruby/pagy $ fav add -f README.md pagy-readme
 [ADDED]  F  pagy-readme  /home/dd/repos/dd/oss/ruby/pagy/README.md
-```
-
-If you don't pass an explicit name, `fav` generates one based on the `basename $PWD`:
-
-```
-~/repos/dd/oss/ruby/pagy $ fav add
-[ADDED]  D  pagy  /home/dd/repos/dd/oss/ruby/pagy
-
-~/repos/dd/oss/ruby/pagy $ fav add -f CHANGELOG.md
-[ADDED]  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
-
 ```
 
 ### Use the favorite shortcuts
@@ -60,18 +60,20 @@ Use the `fzf` widget to search the favs and insert in the `ZLE` buffer:
 
 ### List favorites
 
-List the favorites (alpha order):
+List the favorites (ordered by -name):
 
 ```
-~ $ fav list
-1  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
-2  D  docf          /home/dd/repos/dd/oss/docker/files
-3  ?  old           /path/old
-4  ?  older         /path/older
-5  D  pagy          /home/dd/repos/dd/oss/ruby/pagy
-6  F  pagy-readme   /home/dd/repos/dd/oss/ruby/pagy/README.md
-7  D  vivh          /opt/vivaldi/resources/vivaldi/hooks
+~ $ fav list -name
+F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
+D  docf          /home/dd/repos/dd/oss/docker/files
+?  old           /path/old
+?  older         /path/older
+D  pagy          /home/dd/repos/dd/oss/ruby/pagy
+F  pagy-readme   /home/dd/repos/dd/oss/ruby/pagy/README.md
+D  vivh          /opt/vivaldi/resources/vivaldi/hooks
 ```
+
+**Notice**: you can also enable the icons from the [Nerd Fonts](https://www.nerdfonts.com) instead of just `F D ?` in the first column
 
 ### Remove favorites
 
