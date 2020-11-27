@@ -7,7 +7,6 @@ _fav_root=$(readlink -f $0 | xargs dirname)
 fpath+=($_fav_root/functions)
 autoload -Uz $(ls -p "$_fav_root/functions" | grep -v /)
 
-[[ -f ${FAV_FILE:=$HOME/.fav} ]] && source "$FAV_FILE" || { mkdir -p "$(dirname "$FAV_FILE")" && touch "$FAV_FILE" }
 ${FAV_DIR_PREVIEW_CMD:=$( _fav-available-cmd 'exa -lbg --git --color=always' 'ls -l' ) }
 ${FAV_FILE_PREVIEW_CMD:=$( _fav-available-cmd 'bat --paging=always' less more ) }
 export FAV_DIR_PREVIEW_CMD FAV_FILE_PREVIEW_CMD
@@ -21,3 +20,5 @@ zle -N fav-widget
 bindkey ${FAV_WIDGET_KEY:='^[v'} fav-widget
 
 hash -df
+
+[[ -f ${FAV_FILE:=$HOME/.fav} ]] && source "$FAV_FILE" || { mkdir -p "$(dirname "$FAV_FILE")" && touch "$FAV_FILE" && _fav-welcome }
