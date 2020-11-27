@@ -1,74 +1,103 @@
 # fav
 
-`zsh`/`fzf` plugin that makes it really easy to add and recall named favorites of your important directories.
+`zsh`/`fzf` plugin: easily add and recall named favorites of your important directories and files.
 
 ## Usage
 
-Add arbitrary named favorites of any current dir:
+### Add favorite
+
+Add arbitrary named favorites of any current dir or any file in it:
 
 ```
-~/repos/dd/oss/docker/files $ fav+ docf
-[ADDED]  docf  ->  /home/dd/repos/dd/oss/docker/files
+~/repos/dd/oss/docker/files $ fav add docf
+[ADDED]  D  docf /home/dd/repos/dd/oss/docker/files
 
-/opt/vivaldi/resources/vivaldi/hooks $ fav+ vivh
-[ADDED]  vivh  ->  /opt/vivaldi/resources/vivaldi/hooks
+/opt/vivaldi/resources/vivaldi/hooks $ fav add vivh
+[ADDED]  D  vivh  /opt/vivaldi/resources/vivaldi/hooks
+
+~/repos/dd/oss/ruby/pagy $ fav add -f README.md pagy-readme
+[ADDED]  F  pagy-readme  /home/dd/repos/dd/oss/ruby/pagy/README.md
 ```
 
 If you don't pass an explicit name, `fav` generates one based on the `basename $PWD`:
 
 ```
-~/repos/dd/oss/ruby/pagy $ fav+
-[ADDED]  pagy  ->  /home/dd/repos/dd/oss/ruby/pagy
+~/repos/dd/oss/ruby/pagy $ fav add
+[ADDED]  D  pagy  /home/dd/repos/dd/oss/ruby/pagy
+
+~/repos/dd/oss/ruby/pagy $ fav add -f CHANGELOG.md
+[ADDED]  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
+
 ```
 
-Use the saved `fav` names in place of the actual dirs:
+### Use the favorite shortcuts
+
+Use the saved favorite names in place of the actual dirs or files:
 
 ```
 ~ $ cd ~pagy           # normal cd
-~ $ ~pagy              # cd with AUTO_CD
+~ $ ~pagy              # cd with AUTO_CD zsh option
 ~ $ ~pa<tab><enter>    # completes ~pagy and cd to it
-~ $ pagy               # cd with AUTO_CD + CDABLE_VARS
-~ $ pagy/lib/extras    # cd with AUTO_CD + CDABLE_VARS in sub-path
+~ $ pagy               # cd with AUTO_CD + CDABLE_VARS zsh options
+~ $ pagy/lib/extras    # cd with AUTO_CD + CDABLE_VARS zsh options in sub-path
+~ $ nano ~pagy-readme  # use the file using its fav name
 ```
+
+### Use the fzf widget
 
 Use the `fzf` widget to search the favs and insert in the `ZLE` buffer:
 
 ```
 ~ $ ls <alt-v>
-<pick one or more favs with fzf>
+<pick one or more favorites with fzf>
 ~ $ ls ~docf ~pagy
+...
+~ $ cat <alt-v>
+<pick one or more favorites with fzf>
+~ $ cat ~pagy-readme CHANGELOG.md
 ...
 ```
 
-Remove named fav(s):
+### List favorites
+
+List the favorites (alpha order):
 
 ```
-~ $ fav- doc     # autocompletes if only one matches or opens fzf panel
-[REMOVED]  docf  ->  /home/dd/repos/dd/oss/docker/files
+~ $ fav list
+1  F  CHANGELOG.md  /home/dd/repos/dd/oss/ruby/pagy/CHANGELOG.md
+2  D  docf          /home/dd/repos/dd/oss/docker/files
+3  ?  old           /path/old
+4  ?  older         /path/older
+5  D  pagy          /home/dd/repos/dd/oss/ruby/pagy
+6  F  pagy-readme   /home/dd/repos/dd/oss/ruby/pagy/README.md
+7  D  vivh          /opt/vivaldi/resources/vivaldi/hooks
 ```
 
-Remove with fzf panel:
+### Remove favorites
+
+Remove named favorite(s):
 
 ```
-~ $ fav-
+~ $ fav remove doc     # autocompletes (if only one matches) or opens the fzf panel
+[REMOVED]  D  docf  /home/dd/repos/dd/oss/docker/files
+```
+
+Remove selected favorites with fzf panel:
+
+```
+~ $ fav remove
 <pick one or more favs with fzf>
-[REMOVED]  vivh  ->  /opt/vivaldi/resources/vivaldi/hooks
+[REMOVED]  D  vivh  /opt/vivaldi/resources/vivaldi/hooks
 ```
 
-List the missing favs (??) not pointing to any dir anymore:
+### Clean unknown paths
+
+Removes all the favorites pointing to a unknown path:
 
 ```
-~ $ fav?
-2  old    ??  /path/old
-3  older  ??  /path/older
-```
-
-Remove all the missing favs with a sigle command:
-
-```
-~ $ fav?-
-[REMOVED]  old    ??  /path/old
-[REMOVED]  older  ??  /path/older
+~ $ fav clean
+[REMOVED]  ?  old    /path/old
+[REMOVED]  ?  older  /path/older
 ```
 
 ## Install
@@ -99,24 +128,31 @@ Add `source "/your/path/to/fav.plugin.zsh"` in your `~/.zshrc`.
 
 ## Commands
 
-| Command         | Action                                                                                                                                       |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fav+ [NAME]`   | Add current dir as `NAME`. If missing, `NAME` is generated based on `basename $PWD`                                                          |
-| `~NAME`         | Generated alias that expands to full favorite path, internally declared with `hash -d NAME=/favorite/path` (see `man zshbuiltins` /hash)     |
-| `fav- [STRING]` | Remove fav(s): matches otpional `STRING` to fav `NAME` and removes it if single match. Multiple matches or no `STRING` open the `fzf` panel  |
-| `fav?`          | Shows list of all the missing (??) favs                                                                                                      |
-| `fav?-`         | Removes all the missing (??) favs                                                                                                            |
-| `alt-v`         | Default `FAV_KEY` binding to the `fav::widget`. It opens the `fzf` panel listing all favs. It insert the selected favs into the `ZLE` buffer |
+| Command                | Action                                                                                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `add [-f FILE] [NAME]` | Add the current dir or the `FILE` in it as `NAME`. If missing, `NAME` is generated based on `basename $PWD` or `FILE`                                                    |
+| `~NAME`                | Generated alias that expands to the full favorite path, internally declared with `hash -d NAME=/favorite/path` (see `man zshbuiltins` /hash)                             |
+| `fav remove [QUERY]`   | Remove selected favorites: `fav` matches the optional `QUERY` to `NAME` and removes it if it gets a single match. No `QUERY` or multiple matches open the `fzf` panel    |
+| `fav list [ORDER]`     | Print the list of all the favorites. ORDER order can be `-type`, `-name`, `-path` or `-time` or reversed with `-rtype`, `-rname`, `-rpath` or `-rtime` (default `-time`) |
+| `fav clean`            | Remove all the favorites pointing to an unknown path                                                                                                                     |
+| `fav env`              | Show the value of variables and options                                                                                                                                  |
+| `fav help`             | Show an usage screen                                                                                                                                                     |
+| `alt-v`                | Default `FAV_WIDGET_KEY` binding to the `fav::widget`. It opens the `fzf` panel listing all favs. It pastes the selected favorites into the `ZLE` buffer                 |
 
 ## Options
 
-| Variable               | Description                                                                                                 |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `FAV_KEY`              | Key binding: default `^[v` (alt-v)                                                                          |
-| `FAV_FILE`             | Path to the data file: default `$HOME/.fav`                                                                 |
-| `FAV_FZF_PREVIEW`      | Command used to populate the `fzf` preview panel with `ls` or `exa`. Set it to `''` to disable the preview |
-| `FAV_FZF_OPTS`         | `fav` extra `fzf` options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`)                       |
-| `FAV_COLORIZE_MISSING` | Colorize the missing favs (??) in the `fzf` panel list. Set it to `never` to disable it                     |
+| Variable               | Description                                                                                                                       | Default             |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `FAV_WIDGET_KEY`       | Key binding                                                                                                                       | `^[v` (alt-v)       |
+| `FAV_FILE`             | Path to the data file                                                                                                             | `$HOME/.fav`        |
+| `FAV_FZF_OPTS`         | Extra `fzf` string/array of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`)                                   | `()`                |
+| `FAV_DIR_PREVIEW_CMD`  | Command used to populate the `fzf` preview panel for dirs                                                                         | `exa | ls`          |
+| `FAV_FILE_PREVIEW_CMD` | Command used to populate the `fzf` preview panel for files                                                                        | `bat | less | more` |
+| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)                                                | `false`             |
+| `FAV_DIR_ICON`         | Icon string for dirs                                                                                                              | `D`                 |
+| `FAV_FILE_ICON`        | Icon string for files                                                                                                             | `F`                 |
+| `FAV_UNKNOWN_ICON`     | Icon string for unknown paths                                                                                                     | `?`                 |
+| `FAV_ORDER`            | Keep the favorite list ordered by `-type`, `-name`, `-path` or `-time` or reversed with `-rtype`, `-rname`, `-rpath` or `-rtime`. | `-time`             |
 
 ## License
 

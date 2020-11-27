@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+_fav-welcome() {
+	cat <<-WELCOME
+
+		>>> Fav have been installed and configured on your system! <<<
+
+		If you see 3 icons here >>>           <<<  you may want to configure:
+
+		FAV_ENABLE_ICON=true
+
+		or install your favorite NerdFont (https://www.nerdfonts.com) first.
+
+
+		>>> Here is your current \`fav env\` <<<
+
+		$( _fav-cli-env )
+
+
+		>>> For more info and options here is your \`fav help\` <<<
+
+		$( _fav-cli-help)
+	WELCOME
+}

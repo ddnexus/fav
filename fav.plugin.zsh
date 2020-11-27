@@ -1,46 +1,24 @@
 #!/usr/bin/env zsh
 
-FAV_KEY=${FAV_KEY:-'^[v'}
-[[ -f ${FAV_FILE:=$HOME/.fav} ]] || mkdir -p "$(dirname "$FAV_FILE")" && touch "$FAV_FILE"
-! (( ${+FAV_FZF_PREVIEW} )) && { (( $+commands[exa] )) && FAV_FZF_PREVIEW='--preview="exa -lbg --git --color=always {-1}"' || FAV_FZF_PREVIEW='--preview="ls -l {-1}"' }
+# Copyright (c) 2020 Domizio Demichelis - dd.nexus@gmail.com - https://github/com/ddnexus
 
-fav+() {
-    local name=${1:-$(basename $PWD)}
-    name=$( sed -e 's/[^A-Za-z0-9._-]/_/g; s/^-/_/' <<< $name ) # handle invalid chars for hash name
-    [[ -n $(hash -dm $name) && -d ~$name ]] && echo "[ERROR] Found valid duplicate: $name ->" ~$name "-- please, use a different name!" && return 1
-    echo "hash -d $name=$PWD" >> "$FAV_FILE"
-    fav::load
-    echo "[ADDED]  $name  ->  $PWD"
-}
+_fav_version="0.2.0"
+_fav_root=$(readlink -f $0 | xargs dirname)
+fpath+=($_fav_root/functions)
+autoload -Uz $(ls -p "$_fav_root/functions" | grep -v /)
 
-fav-() { fav::ls | fav::fzf --query="$*" -1 --nth=1,2,4 | fav::rm }
+${FAV_DIR_PREVIEW_CMD:=$( _fav-available-cmd 'exa -lbg --git --color=always' 'ls -l' ) }
+${FAV_FILE_PREVIEW_CMD:=$( _fav-available-cmd 'bat --paging=always' less more ) }
+export FAV_DIR_PREVIEW_CMD FAV_FILE_PREVIEW_CMD
+${FAV_ORDER:=-time}
+${FAV_ENABLE_ICONS:=false}
+${FAV_DIR_ICON:=$($FAV_ENABLE_ICONS && echo ' ' || echo 'D')}        #  
+${FAV_FILE_ICON:=$($FAV_ENABLE_ICONS && echo ' ' || echo 'F')}       #  
+${FAV_UNKNOWN_ICON:=$($FAV_ENABLE_ICONS && echo '' || echo '?')}
 
-fav?() { fav::ls | awk '{ if ($3 == "??") print }' | column -t }
+zle -N fav-widget
+bindkey ${FAV_WIDGET_KEY:='^[v'} fav-widget
 
-fav?-() { fav? | fav::rm }
+hash -df
 
-fav::load() { source "$FAV_FILE" }
-
-fav::fzf() { grep --color=${FAV_COLORIZE_MISSING:-'always'} -E ".*  \?\?  .*|$" | eval "fzf $FAV_FZF_OPTS $FAV_FZF_PREVIEW --ansi -m $@" }
-
-fav::ls() { sed 's/hash -d \([^=]*\)=/\1 -> /' "$FAV_FILE" | nl | awk '{ if (system("test -d " $4)) $3="??"; print }' | column -t }
-
-fav::rm() { 
-    awk -vfile="$FAV_FILE" '{ lines=lines$1"d;"; $1="[REMOVED]"; print } END { system("sed -i \"" lines "\"" FS file) }' |
-        column -t | grep . && { hash -drf; fav::load } 
-}
-
-fav::widget() {
-    local accept=$(should-accept-line)
-    LBUFFER="${LBUFFER}$( fav::ls | fav::fzf --nth=2,4 | awk -vORS=" " '{ print "~"$2 }' )"
-    local ret=$?
-    zle redisplay
-    typeset -f zle-line-init >/dev/null && zle zle-line-init
-    [[ $ret -eq 0 && -n "$BUFFER" && -n "$accept" ]] && zle .accept-line
-    return $ret
-}
-
-fav::load
-
-zle -N fav::widget
-bindkey $FAV_KEY fav::widget
+[[ -f ${FAV_FILE:=$HOME/.fav} ]] && source "$FAV_FILE" || { mkdir -p "$(dirname "$FAV_FILE")" && touch "$FAV_FILE" && _fav-welcome }

@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+_fav-ls() {
+    local fav_order=${1:-${FAV_ORDER:--time}}
+    local len=( $( awk -F'=' '{ if ( length($1) > l ) { l=length($1) } } END { print length(NR) ORS l-8}' "$FAV_FILE" ) )
+    awk -F'=' -vUi="$FAV_UNKNOWN_ICON" -vFi="$FAV_FILE_ICON" -vDi="$FAV_DIR_ICON" -vL1="${len[1]}" -vL3="${len[2]}" \
+        'BEGIN { Ufmt = "\033[31m%-"L1"s  U  "Ui"  %-"L3"s  %s\033[0m\n"
+                 Ffmt = "\033[33m%-"L1"s  F  "Fi"  %-"L3"s  %s\033[0m\n"
+                 Dfmt = "\033[34m%-"L1"s  D  "Di"  %-"L3"s  %s\033[0m\n"
+               }
+               { name = substr($1,9)
+                 path = substr($0, index($0,FS)+2); sub(/"$/, "", path)
+                 if      (system("test -e \""path"\"")){ printf Ufmt, NR, name, path }
+                 else if (system("test -d \""path"\"")){ printf Ffmt, NR, name, path }
+                 else                                  { printf Dfmt, NR, name, path }
+               }' "$FAV_FILE" |
+        case "$fav_order" in
+            -type)  LC_ALL=C sort -dbi  -k2,2 -k4,4 ;;
+            -rtype) LC_ALL=C sort -dbir -k2,2 -k4,4 ;;
+            -name)  LC_ALL=C sort -dbi  -k4,4 ;;
+            -rname) LC_ALL=C sort -dbir -k4,4 ;;
+            -path)  LC_ALL=C sort -dbi  -k5 ;;
+            -rpath) LC_ALL=C sort -dbir -k5 ;;
+            -time)  >&1 ;;
+            -rtime) LC_ALL=C sort -k1.6,1nr ;;
+            *)  echo "[ERROR] Unrecognized FAV_ORDER \"$fav_order\"! Using default order \"-time\".\n" >&2
+                >&1
+                return 1
+            ;;
+        esac
+}
