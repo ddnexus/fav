@@ -2,15 +2,14 @@
 
 _fav-rm() {
     local removed=$( < /dev/stdin )
-    [[ -z $removed ]] && echo "[INFO] All right! Nothing to clean!" >&2 && return 0
-    local len=$( awk '{ if ( length($3) > l ) { l=length($3) } } END { print l }' <<< "$removed" )
-    awk -vL3="$len" -vfav_file="$FAV_FILE" \
-        'BEGIN { fmt = "[REMOVED]  %s  %-"L3"s  %s\n"
+    [[ -z $removed && $1 ]] && echo "[INFO] All right! Nothing to clean!" >&2 && return 0
+    local nameL=$( awk '{ if (length($4) > nameL) nameL = length($4) } END { print nameL }' <<< "$removed" )
+    awk -v nameL="$nameL" -v fav_file="$FAV_FILE" \
+        'BEGIN { fmt = "[REMOVED]  %s  %-"nameL"s  %s\n"
                }
-               { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "", $0)
-                 lines = lines$1"d;"
-                 path = substr($0, index($0,$5))
-                 printf fmt, $3, $4, path
+               { gsub(/[[:cntrl:]]\[[[:digit:]]+m/, "")
+                 lines = lines $1 "d;"
+                 printf fmt, $3, $4, substr($0, index($0,$5))
                }
          END   { system("sed -i \"" lines "\" " fav_file)
                }' <<< "$removed"
