@@ -2,6 +2,6 @@
 
 _fav-cli-clean() {
     _fav-ls |
-        awk '{ if ($2 == "U") print }' |
-            _fav-rm
+        awk '$2 == "U"' |
+            _fav-rm "true"
 }
