@@ -6,7 +6,7 @@
 
 ### Add favorite
 
-Add any dir or file as a favorite: 
+Add any dir or file as a favorite:
 
 ```
 ~/repos/dd/oss/ruby/pagy $ fav add
@@ -143,18 +143,25 @@ Add `source "/your/path/to/fav.plugin.zsh"` in your `~/.zshrc`.
 
 ## Options
 
-| Variable               | Description                                                                                                                       | Default             |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `FAV_WIDGET_KEY`       | Key binding                                                                                                                       | `^[v` (alt-v)       |
-| `FAV_FILE`             | Path to the data file                                                                                                             | `$HOME/.fav`        |
-| `FAV_FZF_OPTS`         | Extra `fzf` string/array of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`)                                   | `()`                |
-| `FAV_DIR_PREVIEW_CMD`  | Command used to populate the `fzf` preview panel for dirs                                                                         | `exa | ls`          |
-| `FAV_FILE_PREVIEW_CMD` | Command used to populate the `fzf` preview panel for files                                                                        | `bat | less | more` |
-| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)                                                | `false`             |
-| `FAV_DIR_ICON`         | Icon string for dirs                                                                                                              | `D`                 |
-| `FAV_FILE_ICON`        | Icon string for files                                                                                                             | `F`                 |
-| `FAV_UNKNOWN_ICON`     | Icon string for unknown paths                                                                                                     | `?`                 |
-| `FAV_ORDER`            | Keep the favorite list ordered by `-type`, `-name`, `-path` or `-time` or reversed with `-rtype`, `-rname`, `-rpath` or `-rtime`. | `-time`             |
+| Variable               | Description                                                                                                                       | Default                                                                  |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `FAV_WIDGET_KEY`       | Key binding                                                                                                                       | `^[v` (alt-v)                                                            |
+| `FAV_FILE`             | Path to the data file                                                                                                             | `$HOME/.fav`                                                             |
+| `FAV_FZF_OPTS`         | Extra `fzf` string of options to override the `FZF_DEFAULT_OPTS` (see `man fzf /options`)                                         | `--height=50% --inline-info --exact --preview-window=noborder --reverse` |
+| `FAV_DIR_PREVIEW_CMD`  | Command used to populate the `fzf` preview panel for dirs                                                                         | `exa | ls`                                                               |
+| `FAV_FILE_PREVIEW_CMD` | Command used to populate the `fzf` preview panel for files                                                                        | `bat | less | more`                                                      |
+| `FAV_ENABLE_ICONS`     | Enable icons from fonts like [Nerd Fonts](https://www.nerdfonts.com) (true\|false)                                                | `false`                                                                  |
+| `FAV_DIR_ICON`         | Icon string for dirs                                                                                                              | `D`                                                                      |
+| `FAV_FILE_ICON`        | Icon string for files                                                                                                             | `F`                                                                      |
+| `FAV_UNKNOWN_ICON`     | Icon string for unknown paths                                                                                                     | `?`                                                                      |
+| `FAV_ORDER`            | Keep the favorite list ordered by `-type`, `-name`, `-path` or `-time` or reversed with `-rtype`, `-rname`, `-rpath` or `-rtime`. | `-time`                                                                  |
+
+## Suggestions
+
+- [exa](https://the.exa.website) and [bat](https://github.com/sharkdp/bat) provide a better user experience. You may want to install them and maybe customize the `FAV_DIR_PREVIEW_CMD` and `FAV_FILE_PREVIEW_CMD`.
+- The [Nerd Fonts](https://www.nerdfonts.com) provide icons for your terminal. You may want to install your preferred font-family and use it in your terminal. Then enable its icons with `FAV_ENABLE_ICONS`.
+- Edit the `FAV_FZF_OPTS` - or even empty it - if it overrides some of your own favorite fzf options.
+- If you prefer to have the newest favorites on top of the list, set `FAV_ORDER=-rtime`
 
 ## License
 
