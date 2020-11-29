@@ -2,7 +2,7 @@
 
 fav-widget() {
     local accept=$(should-accept-line)
-    LBUFFER="${LBUFFER}$( _fav-widget )"
+    LBUFFER="${LBUFFER}$( _fav-pick )"
     local ret=$?
     zle redisplay
     typeset -f zle-line-init > /dev/null && zle zle-line-init

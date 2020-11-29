@@ -3,7 +3,7 @@
 # --with-nth = show fields from original input
 # --nth = search fields from shown input
 # preview param {} based on original input (re-join possibly space-split path)
-_fav-fzf() {
+_fav-panel() {
     fzf ${=FAV_FZF_OPTS} \
         --with-nth=3.. \
         --nth=2.. \
