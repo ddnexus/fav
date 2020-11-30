@@ -7,13 +7,12 @@ if [[ -d $1 ]]; then
     ${=FAV_DIR_PREVIEW_CMD} "$1"
 else
     case "$1" in
-        *.pdf)     pdftotext "$1" - ;;
-        *.zip)     unzip -l  "$1"   ;;
-        *.tar.gz)  tar -ztvf "$1"   ;;
-        *.tar.bz2) tar -jtvf "$1"   ;;
-        *.tar.xz)  tar -Jtvf "$1"   ;;
-        *.tar)     tar -tvf  "$1"   ;;
-        *)                 < "$1"   ;;
-    esac |
-        ${=FAV_FILE_PREVIEW_CMD}
+        *.pdf)     pdftotext "$1" - | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.zip)     unzip -l  "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar.gz)  tar -ztvf "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar.bz2) tar -jtvf "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar.xz)  tar -Jtvf "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar)     tar -tvf  "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *) ${=FAV_FILE_PREVIEW_CMD} "$1"  ;;
+    esac
 fi

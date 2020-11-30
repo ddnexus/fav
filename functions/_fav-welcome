@@ -12,12 +12,7 @@ _fav-welcome() {
 		or install your favorite NerdFont (https://www.nerdfonts.com) first.
 
 
-		>>> Here is your current \`fav env\` <<<
-
-		$( _fav-cli-env )
-
-
-		>>> For more info and options here is your \`fav help\` <<<
+		>>> Here is your current \`fav help\` <<<
 
 		$( _fav-cli-help)
 	WELCOME

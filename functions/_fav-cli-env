@@ -7,7 +7,7 @@ _fav-cli-env() {
                       FAV_WIDGET_KEY \
                       FAV_DIR_PREVIEW_CMD \
                       FAV_FILE_PREVIEW_CMD \
-                      FAV_FZF_OPTIONS \
+                      FAV_FZF_OPTS \
                       FAV_ENABLE_ICONS \
                       FAV_DIR_ICON \
                       FAV_FILE_ICON \
