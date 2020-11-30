@@ -1,6 +1,7 @@
 # fav
 
 `zsh`/`fzf` plugin: easily add and recall named favorites of your important directories and files.
+You can create, delete and autocomplete persistent aliases on the fly, or quickly search them with fzf and paste them in the prompt line.
 
 ## Usage
 
