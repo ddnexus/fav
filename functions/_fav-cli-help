@@ -35,6 +35,9 @@ _fav-cli-help() {
 		    FAV_ORDER             Keep ordered by -type, -name, -path, -time, or reversed
 		                          with -rtype, -rname, -rpath, -rtime. Defaut -time
 
+		CURRENT ENVIRONMENT
+		$(_fav-cli-env)
+
 		DOCUMENTATION
 		    https://github.com/ddnexus/fav
 	HELP
