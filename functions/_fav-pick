@@ -2,7 +2,7 @@
 
 _fav-pick() {
     _fav-ls |
-        _fav-panel --header='Pick the favorites to PASTE in the prompt line' |
+        _fav-panel --header='Pick to PASTE in the prompt line' |
             awk '{ print "~"$4 }' |
                 xargs
 }

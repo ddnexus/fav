@@ -1,18 +1,21 @@
 #!/usr/bin/env zsh
 
-file "$1"
+local target="$1"
+file -- "$target"
 echo
 
-if [[ -d $1 ]]; then
-    ${=FAV_DIR_PREVIEW_CMD} "$1"
+if [[ -d $target ]]; then
+    ${=FAV_DIR_PREVIEW_CMD} -- "$target"
 else
-    case "$1" in
-        *.pdf)     pdftotext "$1" - | ${=FAV_FILE_PREVIEW_CMD} ;;
-        *.zip)     unzip -l  "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
-        *.tar.gz)  tar -ztvf "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
-        *.tar.bz2) tar -jtvf "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
-        *.tar.xz)  tar -Jtvf "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
-        *.tar)     tar -tvf  "$1"   | ${=FAV_FILE_PREVIEW_CMD} ;;
-        *) ${=FAV_FILE_PREVIEW_CMD} "$1"  ;;
+    case "$target" in
+        *.pdf)     pdftotext   -- "$target" - | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.zip)     unzip -l    -- "$target"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar)     tar -tvf       "$target"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar.gz)  tar -ztvf      "$target"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar.xz)  tar -Jtvf      "$target"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.tar.bz2) tar -jtvf      "$target"   | ${=FAV_FILE_PREVIEW_CMD} ;;
+        *.deb) type dpkg-deb >/dev/null &&
+                   dpkg-deb -I -- "$target"   | ${=FAV_FILE_PREVIEW_CMD}  ;;
+        *) ${=FAV_FILE_PREVIEW_CMD} -- "$target"  ;;
     esac
 fi

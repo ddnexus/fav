@@ -7,7 +7,7 @@ _fav_root=$(readlink -f $0 | xargs dirname)
 fpath+=($_fav_root/functions)
 autoload -Uz $(ls -p "$_fav_root/functions" | grep -v /)
 
-${FAV_DIR_PREVIEW_CMD:=$( _fav-available-cmd 'exa -lbg --git --color=always' 'ls -l --color' ) }
+${FAV_DIR_PREVIEW_CMD:=$( _fav-available-cmd 'exa -lbg --color=always' 'ls -l --color' ) }
 ${FAV_FILE_PREVIEW_CMD:=$( _fav-available-cmd 'bat --pager=always --style=numbers --color=always' less more ) }
 export FAV_DIR_PREVIEW_CMD FAV_FILE_PREVIEW_CMD
 ${FAV_FZF_OPTS:='--height=50% --inline-info --exact --preview-window=noborder --reverse'}
