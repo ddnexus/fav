@@ -1,5 +1,11 @@
 # fav
 
+## Archived
+
+This projecthas been archived. Please, take a look at [FM](https://github.com/ddnexus/fm) which integratesx the same functionalities, plush much more.
+
+## Overview
+
 `zsh`/`fzf` plugin: easily add and recall named favorites of your important directories and files.
 You can create, delete and autocomplete persistent aliases on the fly, or quickly search them with fzf and paste them in the prompt line.
 
